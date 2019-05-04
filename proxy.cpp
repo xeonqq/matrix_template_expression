@@ -9,9 +9,13 @@ int main()
 	Matrix a{1};
 	Matrix b{2};
 	Matrix c{3};
-	Matrix d{4};
-	auto sum = a + b + c + d;
+	MatrixE mat_a{a};
+	MatrixE mat_b{b};
+	MatrixE mat_c{c};
 
-	//cout << sum << endl;
+	//const auto sum = mat_a + mat_b + mat_c;
+	const auto sum = MatrixE{a} + mat_b + mat_c;
+
+	cout << sum << endl;
 }
 
