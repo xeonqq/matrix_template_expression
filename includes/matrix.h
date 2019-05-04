@@ -42,6 +42,7 @@ class Expression
 	public:
 		Expression(T exp):exp(std::move(exp)) {} //copy once in construction
 		auto eval() const {return exp.eval();}
+		operator auto () const {return exp.eval();}
 	private:
 		T exp;
 };

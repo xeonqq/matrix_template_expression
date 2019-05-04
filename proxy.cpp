@@ -14,7 +14,7 @@ int main()
 	MatrixE mat_c{c};
 
 	//const auto sum = mat_a + mat_b + mat_c;
-	const auto sum = mat_a + mat_b + mat_c;
+	const Matrix2f sum = mat_a + mat_b + mat_c;
 
 	cout << sum << endl;
 }
