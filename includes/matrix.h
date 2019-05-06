@@ -1,8 +1,19 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#include<sum.h>
+#include <sum.h>
+#include <string>
 #include <array>
 #include <algorithm>
+
+#define DEBUG 0
+
+template <typename T>
+void log(T s)
+{
+#if DEBUG
+	std::cout << s << std::endl;
+#endif
+}
 
 template <typename T, size_t dim>
 std::array<T, dim> operator+(const std::array<T, dim>& a1, const std::array<T, dim>& a2)
@@ -22,7 +33,7 @@ class Matrix
 	public:
 		Matrix(Array array):array{std::move(array)} {}
 		const Self& eval() const {
-			std::cout << "eval in Matrix" << std::endl;
+			log("eval in Matrix");
 			return *this;}
 		const Array& row() const {return array;}
 		Self operator+(const Self& other)
@@ -54,7 +65,7 @@ class Sum
 		Sum(const T1& exp1, const T2& exp2):exp1{exp1}, exp2{exp2} {}
 		auto eval() const
 		{
-			std::cout << "eval in Sum" << std::endl;
+			log("eval in Sum");
 			return exp1.eval() + exp2.eval();}
 	private:
 		const T1& exp1;
@@ -75,19 +86,17 @@ operator + (const Exp1& exp1, const Exp2& exp2)
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Expression<T>& mat)
 {
-	os << "Expression " << std::endl;
+	log("Expression ");
 	return os << mat.eval() << std::endl;
 }
 
 template <typename T, size_t dim_w>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, dim_w>& mat)
 {
-	os << "specalized " << std::endl;
+	log("specalized");
 	std::for_each(mat.row().begin(), mat.row().end(), [&os](const auto& v){os<<v<<",";});
 	return os;
 }
 
-using MatrixE = Expression<Matrix<double,2>>;
-using Matrix2f = Matrix<double, 2>;
 
 #endif /* MATRIX_H */
