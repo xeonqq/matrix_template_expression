@@ -3,9 +3,8 @@
 #include <string>
 #include <matrix.h>
 
-#define SIZE 2000
+#define SIZE 200
 
-using MatrixE = Expression<Matrix<double,SIZE>>;
 using Matrix2f = Matrix<double, SIZE>;
 
 using namespace std;
@@ -20,15 +19,11 @@ int main()
 	std::array<double, SIZE> cc;
 	cc.fill(48.8);
 
-	Matrix2f a{std::move(aa)};
-	Matrix2f b{std::move(bb)};
-	Matrix2f c{std::move(cc)};
-	MatrixE mat_a{a};
-	MatrixE mat_b{b};
-	MatrixE mat_c{c};
+	Matrix2f mat_a{std::move(aa)};
+	Matrix2f mat_b{std::move(bb)};
+	Matrix2f mat_c{std::move(cc)};
 
-	//const auto sum = mat_a + mat_b + mat_c;
-	const Matrix2f sum = mat_a + mat_b + mat_c + mat_a + mat_a + mat_a + mat_a;
+	const auto sum = mat_a + mat_b + mat_c;
 
 	log(sum);
 }
