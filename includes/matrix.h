@@ -46,7 +46,6 @@ class Matrix
 template <typename T, size_t dim_w>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, dim_w>& mat)
 {
-	log("specalized");
 	std::for_each(mat.row().begin(), mat.row().end(), [&os](const auto& v){os<<v<<",";});
 	return os;
 }

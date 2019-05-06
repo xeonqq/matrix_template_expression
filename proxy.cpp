@@ -3,7 +3,7 @@
 #include <string>
 #include <matrix.h>
 
-#define SIZE 200
+#define SIZE 2000
 
 using Matrix2f = Matrix<double, SIZE>;
 
@@ -23,7 +23,7 @@ int main()
 	Matrix2f mat_b{std::move(bb)};
 	Matrix2f mat_c{std::move(cc)};
 
-	const auto sum = mat_a + mat_b + mat_c;
+	const auto sum = mat_a + mat_a + mat_a + mat_b + mat_c;
 
 	log(sum);
 }
