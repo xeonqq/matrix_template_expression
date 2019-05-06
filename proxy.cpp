@@ -3,8 +3,8 @@
 #include <string>
 #include <matrix.h>
 
-#define ROWS 20
-#define COLS 20
+#define ROWS 44
+#define COLS 44
 #define SIZE ROWS*COLS
 
 using Matrix2f = Matrix<double, ROWS, COLS>;
@@ -25,7 +25,7 @@ int main()
 	Matrix2f mat_b{std::move(bb)};
 	Matrix2f mat_c{std::move(cc)};
 
-	const Matrix2f sum = mat_a + mat_b + mat_c;
+	const Matrix2f sum = mat_a + mat_b - mat_c;
 	logger(sum);
 }
 
