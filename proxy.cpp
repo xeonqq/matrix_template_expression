@@ -23,8 +23,7 @@ int main()
 	Matrix2f mat_b{std::move(bb)};
 	Matrix2f mat_c{std::move(cc)};
 
-	//const auto sum = mat_a + mat_b + mat_c;
-	const Matrix2f sum = mat_a + mat_b + mat_c + mat_a + mat_a + mat_a + mat_a;
+	const Matrix2f sum = mat_a + mat_a + mat_a + mat_b + mat_c;
 	logger(sum);
 }
 

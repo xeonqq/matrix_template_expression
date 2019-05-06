@@ -69,7 +69,6 @@ template<typename Exp1, typename Exp2>
 Sum<Exp1, Exp2>
 operator + (const Exp1& exp1, const Exp2& exp2)
 {
-
 	logger("Construct Sum");
 	return Sum<Exp1, Exp2>(exp1, exp2);
 }
@@ -79,7 +78,6 @@ operator + (const Exp1& exp1, const Exp2& exp2)
 template <typename T, size_t dim_w>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, dim_w>& mat)
 {
-	logger("specalized");
 	std::for_each(mat.row().begin(), mat.row().end(), [&os](const auto& v){os<<v<<",";});
 	return os;
 }
