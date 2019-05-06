@@ -8,7 +8,7 @@
 #define DEBUG 0
 
 template <typename T>
-void logger(T s)
+void logger(T&& s)
 {
 #if DEBUG
 	std::cout << s << std::endl;
