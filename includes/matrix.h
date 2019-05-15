@@ -8,7 +8,7 @@
 #define DEBUG 0
 
 template <typename T>
-void logger(T&& s)
+constexpr void logger(T&& s)
 {
 #if DEBUG
 	std::cout << s << std::endl;
@@ -25,10 +25,10 @@ class Matrix
 	using Array=std::array<Value, dim_rows*dim_cols>;
 	using Self=Matrix<Value, dim_rows, dim_cols>;
 	public:
-	Matrix(Array array):array{std::move(array)} {}
+	constexpr Matrix(Array array):array{std::move(array)} {}
 
 	template <typename Exp1, typename Exp2, typename Operator>
-	Matrix(BinaryOpExpression<Exp1, Exp2, Operator> sum) //copy constructor
+	constexpr Matrix(BinaryOpExpression<Exp1, Exp2, Operator> sum) //copy constructor
 	{
 		logger("Copy Ctr in Matrix");
 		for (size_t row=0;row<dim_rows;++row)
@@ -40,13 +40,12 @@ class Matrix
 		}
 	}
 
-	const Array& row() const {return array;}
+	constexpr Array& row() const {return array;}
 
-	auto operator() (size_t row, size_t col) const
+	constexpr auto operator() (size_t row, size_t col) const
 		{
 			return array[row*dim_cols + col];
 		}
-
 	private:
 		 Array array;
 
@@ -57,9 +56,9 @@ template <typename T1, typename T2, typename Operator>
 class BinaryOpExpression
 {
 	public:
-		BinaryOpExpression(const T1& exp1, const T2& exp2, const Operator& op):exp1{exp1}, exp2{exp2}, op{op}{}
+		constexpr BinaryOpExpression(const T1& exp1, const T2& exp2, const Operator& op):exp1{exp1}, exp2{exp2}, op{op}{}
 
-		auto operator() (size_t row, size_t col) const
+		constexpr auto operator() (size_t row, size_t col) const
 		{
 			return op(exp1(row, col), exp2(row, col));
 		}
@@ -72,7 +71,7 @@ class BinaryOpExpression
 
 template<typename Exp1, typename Exp2, typename Operator=std::plus<>>
 BinaryOpExpression<Exp1, Exp2, Operator>
-operator + (const Exp1& exp1, const Exp2& exp2)
+constexpr operator + (const Exp1& exp1, const Exp2& exp2)
 {
 	logger("Construct + BinaryOpExpression");
 	return BinaryOpExpression<Exp1, Exp2, Operator>(exp1, exp2, std::plus<>());
@@ -80,7 +79,7 @@ operator + (const Exp1& exp1, const Exp2& exp2)
 
 template<typename Exp1, typename Exp2, typename Operator=std::minus<>>
 BinaryOpExpression<Exp1, Exp2, Operator>
-operator - (const Exp1& exp1, const Exp2& exp2)
+constexpr operator - (const Exp1& exp1, const Exp2& exp2)
 {
 	logger("Construct - BinaryOpExpression");
 	return BinaryOpExpression<Exp1, Exp2, Operator>(exp1, exp2, std::minus<>());
