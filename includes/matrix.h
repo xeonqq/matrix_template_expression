@@ -22,13 +22,20 @@ class BinaryOpExpression;
 template <typename Value, size_t dim_rows, size_t dim_cols>
 class Matrix
 {
-	using Array=std::array<Value, dim_rows*dim_cols>;
-	using Self=Matrix<Value, dim_rows, dim_cols>;
+	//using Array=std::array<Value, dim_rows*dim_cols>;
+	using Array=Value[dim_rows*dim_cols];
 	public:
-	constexpr Matrix(Array array):array{std::move(array)} {}
+	Matrix() = default;
+
+	constexpr Matrix(const Array array):array() {
+		for (size_t i=0;i<dim_cols*dim_cols;++i)
+		{
+			this->array[i] = array[i];
+		}
+	}
 
 	template <typename Exp1, typename Exp2, typename Operator>
-	constexpr Matrix(BinaryOpExpression<Exp1, Exp2, Operator> sum) //copy constructor
+	constexpr Matrix(const BinaryOpExpression<Exp1, Exp2, Operator>& sum): array{}
 	{
 		logger("Copy Ctr in Matrix");
 		for (size_t row=0;row<dim_rows;++row)
@@ -40,7 +47,7 @@ class Matrix
 		}
 	}
 
-	constexpr Array& row() const {return array;}
+	constexpr const Value& at(size_t i) const {return array[i];}
 
 	constexpr auto operator() (size_t row, size_t col) const
 		{
@@ -85,12 +92,18 @@ constexpr operator - (const Exp1& exp1, const Exp2& exp2)
 	return BinaryOpExpression<Exp1, Exp2, Operator>(exp1, exp2, std::minus<>());
 }
 
+//template <typename T, size_t dim_rows, size_t dim_cols>
+//std::ostream& operator<<(std::ostream& os, const Matrix<T, dim_rows, dim_cols>& mat)
+//{
+//	std::for_each(mat.row().begin(), mat.row().end(), [&os](const auto& v){os<<v<<",";});
+//	return os;
+//}
+
 template <typename T, size_t dim_rows, size_t dim_cols>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, dim_rows, dim_cols>& mat)
 {
-	std::for_each(mat.row().begin(), mat.row().end(), [&os](const auto& v){os<<v<<",";});
+	os << mat.at(0);
 	return os;
 }
-
 
 #endif /* MATRIX_H */
