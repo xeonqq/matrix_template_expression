@@ -1,2 +1,1 @@
-build --cxxopt='-std=c++14'
-build -c dbg
+build --cxxopt='-std=c++17'
