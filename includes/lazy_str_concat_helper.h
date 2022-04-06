@@ -5,11 +5,16 @@ template<typename LastString, typename... Str>
 class lazy_str_concat_helper<LastString, Str...>
 {
     public:
-        lazy_str_concat_helper(const LastString& str, const lazy_str_concat_helper<Str...>& helper):last_string_{str},prev_strings_{helper}  {}
+        lazy_str_concat_helper(LastString str, lazy_str_concat_helper<Str...> helper):last_string_{std::move(str)},prev_strings_{std::move(helper)}  {}
 
-        lazy_str_concat_helper<std::string, LastString, Str...> operator+(const std::string& str) const
+        lazy_str_concat_helper<std::string, LastString, Str...> operator+(std::string str) const &
         {
-            return lazy_str_concat_helper<std::string, LastString, Str...>{str, *this};
+            return lazy_str_concat_helper<std::string, LastString, Str...>{std::move(str), *this};
+        }
+
+        lazy_str_concat_helper<std::string, LastString, Str...> operator+(std::string str) &&
+        {
+            return lazy_str_concat_helper<std::string, LastString, Str...>{std::move(str), std::move(*this)};
         }
         
         std::size_t size() const
